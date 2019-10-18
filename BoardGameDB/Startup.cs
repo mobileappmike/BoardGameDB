@@ -15,6 +15,13 @@ namespace BoardGameDB
 {
     public class Startup
     {
+        private IHostEnvironment _webHost;
+
+        public Startup(IHostEnvironment webHost)
+        {
+            _webHost = webHost;
+        }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,7 +34,7 @@ namespace BoardGameDB
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<BoardGameContext>(options => options.UseSqlite(Configuration.GetConnectionString("BoardGameContext")));
+            services.AddDbContext<BoardGameContext>(options => { options.UseSqlite($"Data Source={_webHost.ContentRootPath}/BoardGameDB.db"); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

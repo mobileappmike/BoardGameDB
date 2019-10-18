@@ -8,6 +8,7 @@ namespace BoardGameDB.Data
         public BoardGameContext(DbContextOptions<BoardGameContext> options)
             : base(options)
         {
+            Database.EnsureCreated();
         }
 
         public DbSet<Game> Game { get; set; }
