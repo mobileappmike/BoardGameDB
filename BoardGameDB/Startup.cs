@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BoardGameDB.Data;
 using Microsoft.EntityFrameworkCore;
+using BoardGameDB.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace BoardGameDB
 {
@@ -35,6 +37,9 @@ namespace BoardGameDB
             services.AddControllersWithViews();
 
             services.AddDbContext<BoardGameContext>(options => { options.UseSqlite($"Data Source={_webHost.ContentRootPath}/BoardGameDB.db"); });
+
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<BoardGameContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +57,7 @@ namespace BoardGameDB
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
 
             app.UseRouting();
 
