@@ -10,8 +10,15 @@ namespace BoardGameDB.Models
         public String Title { get; set; }
         public String ImageURL { get; set; }
 
-        [Display(Name = "Release Date")]
+        [Display(Name = "Release Year")]
+        public int ReleaseYear { get; set; }
+
+        [Display(Name ="Added By")]
+        public string AddedByUser { get; set; }
+
+        [Display(Name ="Date Added")]
         [DataType(DataType.Date)]
-        public DateTime ReleaseDate { get; set; }
+        public DateTime DateAdded { get; set; }
+
     }
 }

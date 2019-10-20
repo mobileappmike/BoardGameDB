@@ -7,16 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BoardGameDB.Data;
 using BoardGameDB.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace BoardGameDB.Controllers
 {
     public class GamesController : Controller
     {
         private readonly BoardGameContext _context;
+        private UserManager<User> _userManager;
+        private SignInManager<User> _signManager;
 
-        public GamesController(BoardGameContext context)
+        public GamesController(BoardGameContext context, UserManager<User> userManager, SignInManager<User> signManager)
         {
             _context = context;
+            _userManager = userManager;
+            _signManager = signManager;
         }
 
         // GET: Games
@@ -62,10 +67,21 @@ namespace BoardGameDB.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,ImageURL,ReleaseDate")] Game game)
+        public async Task<IActionResult> Create([Bind("Id,Title,ImageURL,ReleaseYear,AddedByUser,DateAdded")] Game game)
         {
             if (ModelState.IsValid)
             {
+                if (_signManager.IsSignedIn(User))
+                {
+                    var user = await _userManager.GetUserAsync(User);
+                    game.AddedByUser = user.Email;
+                }
+                else
+                {
+                    game.AddedByUser = "Anonymous";
+                }
+
+                game.DateAdded = DateTime.UtcNow;
                 _context.Add(game);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -94,7 +110,7 @@ namespace BoardGameDB.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ImageURL,ReleaseDate")] Game game)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ImageURL,ReleaseYear,AddedByUser,DateAdded")] Game game)
         {
             if (id != game.Id)
             {

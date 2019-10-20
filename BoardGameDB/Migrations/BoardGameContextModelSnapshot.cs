@@ -22,11 +22,17 @@ namespace BoardGameDB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("AddedByUser")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ImageURL")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("ReleaseDate")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("ReleaseYear")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");

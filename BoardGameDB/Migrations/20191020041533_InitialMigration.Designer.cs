@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BoardGameDB.Migrations
 {
     [DbContext(typeof(BoardGameContext))]
-    [Migration("20191019230458_LoginAdded")]
-    partial class LoginAdded
+    [Migration("20191020041533_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,11 +24,17 @@ namespace BoardGameDB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("AddedByUser")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ImageURL")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("ReleaseDate")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("ReleaseYear")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");

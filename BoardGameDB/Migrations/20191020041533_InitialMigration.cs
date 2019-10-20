@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BoardGameDB.Migrations
 {
-    public partial class LoginAdded : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,6 +44,23 @@ namespace BoardGameDB.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Game",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Title = table.Column<string>(nullable: true),
+                    ImageURL = table.Column<string>(nullable: true),
+                    ReleaseYear = table.Column<int>(nullable: false),
+                    AddedByUser = table.Column<string>(nullable: true),
+                    DateAdded = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Game", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -206,6 +223,9 @@ namespace BoardGameDB.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Game");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
