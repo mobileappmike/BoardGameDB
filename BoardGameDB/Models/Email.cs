@@ -29,7 +29,7 @@ namespace BoardGameDB.Models
             {
                 From = new EmailAddress("michael.gage.miles@gmail.com", "Michael Miles @ BoardGameDB"),
                 Subject = "Thanks for your contribution!",
-                PlainTextContent = $"We saw that you added {gameName} to our database yesterday.  Thanks!  Keep up the good work!"
+                PlainTextContent = $"We saw that you added {gameName} to our database.  Thanks!  Keep up the good work!"
             };
             msg.AddTo(new EmailAddress(address));
             var response = await client.SendEmailAsync(msg);

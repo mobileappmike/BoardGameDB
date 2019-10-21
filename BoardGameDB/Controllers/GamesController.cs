@@ -72,9 +72,12 @@ namespace BoardGameDB.Controllers
             if (ModelState.IsValid)
             {
                 if (_signManager.IsSignedIn(User))
-                {
+                {               
                     var user = await _userManager.GetUserAsync(User);
                     game.AddedByUser = user.Email;
+
+                    var email = new Email();
+                    email.SendAddedEmail(user.Email, game.Title).Wait();
                 }
                 else
                 {
