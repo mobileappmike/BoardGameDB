@@ -36,6 +36,9 @@ namespace BoardGameDB.Controllers
 
                 if (result.Succeeded)
                 {
+                    var email = new Email();
+                    email.SendWelcomeEmail(model.Email).Wait();
+
                     await _signManager.SignInAsync(user, false);
                     return RedirectToAction("Index", "Games");
                 }
